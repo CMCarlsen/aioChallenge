@@ -9,11 +9,14 @@ const useStyles = makeStyles((theme: Theme) =>
       color: '#FFF',
       display: 'flex',
       flexDirection: 'row',
-      justifyContent: 'center',
+      justifyContent: 'space-between',
       paddingTop: theme.spacing(0.5),
       paddingBottom: theme.spacing(0.5),
 
-    }
+    },
+    logo: {
+      justifyContent: 'left',
+    },
   }),
 );
 
@@ -22,7 +25,7 @@ export const NavBar = () => {
 
   return (
     <Container className={classes.container} maxWidth={false}>
-      <h1>Insert Cool NavBar here</h1>
+      <h3 className={classes.logo}>RnM</h3>
     </Container>
   );
 }
