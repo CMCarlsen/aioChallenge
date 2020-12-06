@@ -5,17 +5,12 @@ import CssBaseline from '@material-ui/core/CssBaseline' // https://material-ui.c
 
 import theme from "./theme";
 import NavBar from "./components/NavBar";
+import CharaPage from "./pages/CharaPage";
 
 // TODO: Remove these in place of page imports later
 const HomePage = () => (
   <div>
     <h1>HOME</h1>
-  </div>
-);
-
-const CharaPage = () => (
-  <div>
-    <h1>CHARACTERS</h1>
   </div>
 );
 
