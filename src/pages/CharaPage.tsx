@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
-import Container from '@material-ui/core/Container';
 
 import CharacterCard from "../components/CharacterCard";
 import { Info, Character } from "../services/CharacterService";
@@ -22,6 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
     explanationContainer: {
       display: 'flex',
       flexDirection: 'column',
+      padding: '0px 100px',
     },
     explanationHeader: {
       display: 'flex',
@@ -32,16 +32,13 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       justifyContent: 'center'
     },
-    containerContainer: {
-      overflow: 'auto',
-      alignItems: 'center',
-    },
     characterCardContainer: {
       overflow: 'auto',
       display: 'flex',
       flexDirection: 'row',
       flexWrap: 'wrap',
       justifyContent: 'center',
+      padding: '0px 100px',
     },
   }),
 );
@@ -75,18 +72,16 @@ export const CharaPage = () => {
     console.log(results);
 
   return (
-    <Container className={classes.container} maxWidth={false}>
+    <div className={classes.container}>
       <div className={classes.explanationContainer}>
         <h1 className={classes.explanationHeader}>Character Explanation Header</h1>
         <p className={classes.explanationText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla at accumsan tortor.
           Nullam eleifend in nisl et cursus. Aliquam a tortor vitae nisi gravida faucibus. Sed leo elit, mattis eu. </p>
       </div>
-      <div className={classes.containerContainer}>
-        <div className={classes.characterCardContainer}>
-          {results?.map(chara => <CharacterCard character={chara} />)}
-        </div>
+      <div className={classes.characterCardContainer}>
+        {results?.map(chara => <CharacterCard character={chara} />)}
       </div>
-    </Container>
+    </div>
   );
 }
 

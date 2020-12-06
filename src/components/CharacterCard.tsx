@@ -9,11 +9,11 @@ import { Character } from "../services/CharacterService";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      minWidth: '300px',
+      minWidth:'150px',
       maxWidth: '300px',
       margin: '0px 5px 10px',
       backgroundColor: theme.palette.primary.main,
-      flexBasis: 0,
+      flexBasis: '300px',
       flexGrow: 1,
     },
     media: {
