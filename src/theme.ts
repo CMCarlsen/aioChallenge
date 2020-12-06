@@ -1,5 +1,5 @@
 import { createMuiTheme } from '@material-ui/core/styles';
-import purple from '@material-ui/core/colors/purple';
+import grey from '@material-ui/core/colors/grey';
 import green from '@material-ui/core/colors/green';
 
 // Using palette to keep it simple
@@ -8,7 +8,7 @@ import green from '@material-ui/core/colors/green';
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: purple[500],
+      main: grey[900],
     },
     secondary: {
       main: green[500],

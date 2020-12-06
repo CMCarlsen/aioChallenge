@@ -1,8 +1,3 @@
-// name: filter by the given name.
-// status: filter by the given status (alive, dead or unknown).
-// species: filter by the given species.
-// type: filter by the given type.
-// gender: filter by the given gender (female, male, genderless or unknown).
 export interface Info {
   count: number,
   pages: number,
@@ -30,6 +25,15 @@ export interface Character {
   url: string,
   created: string,
 };
+
+interface SearchParameters {
+  page: number,
+  name: string,
+  status: string,
+  species: string,
+  type: string,
+  gender: string,
+}
 
 const buildUrl = () => {};
 

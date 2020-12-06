@@ -5,7 +5,7 @@ import Container from '@material-ui/core/Container';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
-      background: '#000',
+      background: '#272828',
       color: '#FFF',
       display: 'flex',
       flexDirection: 'row',
@@ -25,7 +25,7 @@ export const NavBar = () => {
 
   return (
     <Container className={classes.container} maxWidth={false}>
-      <h3 className={classes.logo}>RnM</h3>
+      <h3 className={classes.logo}>[RnM]</h3>
     </Container>
   );
 }

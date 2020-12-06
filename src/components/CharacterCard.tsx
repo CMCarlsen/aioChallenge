@@ -1,22 +1,41 @@
 import React from 'react';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardMedia from '@material-ui/core/CardMedia';
 
-import { Info, Character } from "../services/CharacterService";
+import { Character } from "../services/CharacterService";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    root: {
+      minWidth: '300px',
+      maxWidth: '300px',
+      margin: '0px 5px 10px',
+      backgroundColor: theme.palette.primary.main,
+      flexBasis: 0,
+      flexGrow: 1,
+    },
+    media: {
+      height: 0,
+      paddingTop: '56.25%',
+    },
     container: {
-      background: '#cfe8fc',
-      color: '#000',
       display: 'flex',
       flexDirection: 'column',
       height: '100%',
       paddingTop: theme.spacing(0.1),
       paddingBottom: theme.spacing(0.5),
     },
-    banana: {
-      display: 'flex',
-      flexDirection: 'column',
+    // https://css-tricks.com/flexbox-truncated-text/
+    cardHeaderContent: {
+      minWidth: 0,
+    },
+    whiteFont: {
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      color: '#fff',
     },
   }),
 );
@@ -26,12 +45,24 @@ interface Props {
 };
 
 export const CharaPage = ({ character }:Props) => {
-  const classes = useStyles(); // Use our CSS-in-JS styling from above.
+  const classes = useStyles();
 
   return (
-    <div className={classes.banana}>
-      {character.name}
-    </div>
+    <Card className={classes.root}>
+      <CardHeader classes={{
+        content: classes.cardHeaderContent,
+        title: classes.whiteFont,
+        subheader: classes.whiteFont,
+        }}
+        title={character.name}
+        subheader={`${character.species} - ${character.gender} - ${character.status}`}
+      />
+      <CardMedia
+        className={classes.media}
+        image={character.image}
+        title={character.name}
+      />
+    </Card>
   );
 }
 

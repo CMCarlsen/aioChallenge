@@ -4,16 +4,17 @@ import { ThemeProvider } from '@material-ui/core/styles' // https://material-ui.
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline' // https://material-ui.com/components/css-baseline/
 
-import theme from "./theme";
-import NavBar from "./components/NavBar";
-import CharaPage from "./pages/CharaPage";
+import theme from './theme';
+import NavBar from './components/NavBar';
+import CharaPage from './pages/CharaPage';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: "flex",
-      flexFlow: "column",
-      height: "100vh"
+      display: 'flex',
+      flexFlow: 'column',
+      height: '100vh',
+      overflow: 'hidden',
     }
   }),
 );
