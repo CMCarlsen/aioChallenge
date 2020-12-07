@@ -4,10 +4,10 @@ import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import Grid from '@material-ui/core/Grid';
 
-import CharacterCard from "../components/CharacterCard";
-import { Info, Character, SearchParameters } from "../services/CharacterService";
-import { buildUrl, fetchCharacterList } from "../services/CharacterService";
-import SearchBar from "../components/SearchBar";
+import CharacterCard from '../components/CharacterCard';
+import { Info, Character, SearchParameters } from '../services/CharacterService';
+import { buildUrl, fetchCharacterList } from '../services/CharacterService';
+import SearchBar from '../components/SearchBar';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -104,7 +104,7 @@ export const CharaPage = () => {
         <div className={classes.pageScrollArrowDiv}>
           <KeyboardArrowLeftIcon className={classes.pageScrollArrow} fontSize='large' />
         </div>
-        <Grid container direction='row' justify="center" alignItems="center" spacing={1}
+        <Grid container direction='row' justify='center' alignItems='center' spacing={1}
               className={classes.characterCardContainer}>
           {results?.map(chara =>
             <Grid item xs={7} sm={4} md={3} lg={2} key={chara.id}>
