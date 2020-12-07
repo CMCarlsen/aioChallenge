@@ -26,12 +26,12 @@ export interface Character {
   created: string,
 };
 
-interface CharacterServResp {
+export interface CharacterServResp {
   info: Info,
   characterList: Character[],
 };
 
-interface SearchParameters {
+export interface SearchParameters {
   name: string,
   status: string,
   species: string,
@@ -42,7 +42,6 @@ interface SearchParameters {
 const baseUrl = 'https://rickandmortyapi.com/api/character';
 
 const buildUrl = (page: number, parameters: Partial<SearchParameters>) => {
-  // in build url
   let url = `${baseUrl}/?page=${page || 1}`;
 
   for(const [k, v] of Object.entries(parameters)) {
@@ -53,7 +52,6 @@ const buildUrl = (page: number, parameters: Partial<SearchParameters>) => {
 };
 
 const fetchCharacterList = async (url: string) => {
-  // Fetching stuff
   const result = await fetch(url);
   const json = await result.json();
 

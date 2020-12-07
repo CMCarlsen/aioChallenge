@@ -5,9 +5,9 @@ import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import Grid from '@material-ui/core/Grid';
 
 import CharacterCard from "../components/CharacterCard";
-import { Info, Character } from "../services/CharacterService";
-
-const baseUrl = 'https://rickandmortyapi.com/api/character/';
+import { Info, Character, SearchParameters } from "../services/CharacterService";
+import { buildUrl, fetchCharacterList } from "../services/CharacterService";
+import SearchBar from "../components/SearchBar";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -74,44 +74,43 @@ const useStyles = makeStyles((theme: Theme) =>
 export const CharaPage = () => {
   const classes = useStyles(); // Use our CSS-in-JS styling from above.
 
+  const [searchParams, setSearchParams] = useState<Partial<SearchParameters>>({});
   const [info, setInfo] = useState<Info>();
   const [results, setResults] = useState<Array<Character>>();
-
-  const [name, setName] = useState('');
-  const [status, setStatus] = useState<'alive'|'dead'|'unknown'|null>(null);
-  const [species, setSpecies] = useState('');
-  const [type, setType] = useState('');
-  const [gender, setGender] = useState<'male'|'female'|'genderless'|'unknown'|null>(null);
-
   const [page, setPage] = useState(1); // TODO: Add pagination using this
 
   useEffect(() => {
-    fetch(baseUrl)
-     .then(resp => resp.json())
-     .then(data => {
-       setInfo(data.info);
-       setResults(data.results);
-     });
-    }, [name, status, species, type, gender, page]);
+    // Typescript hack for useEffect
+    // https://medium.com/javascript-in-plain-english/how-to-use-async-function-in-react-hook-useeffect-typescript-js-6204a788a435
+    async function searchOnChanges() {
+      const urlToSearch = buildUrl(page, searchParams);
+      const newCharList = await fetchCharacterList(urlToSearch);
+      const { info, characterList } = newCharList;
+      setInfo(info);
+      setResults(characterList);
+    }
 
-  if(info)
-    console.log(info);
-  if(results)
-    console.log(results);
+    searchOnChanges();
+  }, [searchParams, page]);
 
   return (
     <div className={classes.container}>
       <div className={classes.explanationContainer}>
         <h1 className={classes.explanationHeader}>RnM API</h1>
-        <p className={classes.explanationText}>Wubba Lubba Dub Dub</p>      </div>
+        <p className={classes.explanationText}>Wubba Lubba Dub Dub</p>
+        <SearchBar doSearch={setSearchParams} />
+      </div>
       <div className={classes.contentContainer}>
         <div className={classes.pageScrollArrowDiv}>
           <KeyboardArrowLeftIcon className={classes.pageScrollArrow} fontSize='large' />
         </div>
-        <Grid container direction='row' justify="center" alignItems="center" spacing={1} className={classes.characterCardContainer}>
+        <Grid container direction='row' justify="center" alignItems="center" spacing={1}
+              className={classes.characterCardContainer}>
           {results?.map(chara =>
-              <Grid item xs={7} sm={4} md={3} lg={2}><CharacterCard character={chara} /></Grid>
-            )}
+            <Grid item xs={7} sm={4} md={3} lg={2} key={chara.id}>
+              <CharacterCard character={chara} />
+            </Grid>
+          )}
         </Grid>
         <div className={classes.pageScrollArrowDiv}>
           <KeyboardArrowRightIcon className={classes.pageScrollArrow} fontSize='large' />
