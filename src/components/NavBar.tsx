@@ -5,7 +5,7 @@ import Container from '@material-ui/core/Container';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
-      background: '#272828',
+      background: theme.palette.primary.dark,
       color: '#FFF',
       display: 'flex',
       flexDirection: 'row',

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import clsx from 'clsx';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
+import { fade } from '@material-ui/core/styles/colorManipulator';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import Grid from '@material-ui/core/Grid';
@@ -44,6 +46,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       flexDirection: 'row',
       marginTop: '20px',
+      height: '100%',
     },
     characterCardContainer: {
       overflow: 'auto',
@@ -62,7 +65,7 @@ const useStyles = makeStyles((theme: Theme) =>
       minWidth: '50px',
       maxWidth: '50px',
       '&:hover': {
-        backgroundColor: theme.palette.primary.dark,
+        backgroundColor: fade(theme.palette.primary.dark, 0.5),
       },
       position: 'relative',
     },
@@ -73,6 +76,9 @@ const useStyles = makeStyles((theme: Theme) =>
       top: '50%',
       left: '50%',
       transform: 'translate(-50%,-50%)',
+    },
+    hidden: {
+      visibility: 'hidden',
     }
   }),
 );
@@ -99,29 +105,46 @@ export const CharaPage = () => {
     searchOnChanges();
   }, [searchParams, page]);
 
-  const paramsTest = (thing:any) => {
-    setSearchParams(thing);
+  const prevPageClick = () => {
+    if(info?.prev){
+      setPage(page-1);
+    }
+  }
+
+  const nextPageClick = () => {
+    if(info?.next){
+      setPage(page+1);
+    }
+  }
+
+  const handleNewSearch = (searchParams: Partial<SearchParameters>) => {
+    setPage(1);
+    setSearchParams(searchParams)
   }
 
   return (
     <div className={classes.container}>
       <div className={classes.explanationContainer}>
         <h1 className={classes.explanationHeader}>RnM API</h1>
-        <SearchBar doSearch={paramsTest} />
+        <SearchBar doSearch={handleNewSearch} />
       </div>
       <div className={classes.contentContainer}>
-        <div className={classes.pageScrollArrowDiv}>
+        <div onClick={prevPageClick} className={clsx(classes.pageScrollArrowDiv,{
+          [classes.hidden]: !info?.prev
+        })}>
           <KeyboardArrowLeftIcon className={classes.pageScrollArrow} fontSize='large' />
         </div>
         <Grid container spacing={1}
               className={classes.characterCardContainer}>
           {results?.map(chara =>
-            <Grid item xs={12} sm={6} md={3} lg={3} xl={2} key={chara.id}>
+            <Grid item xs={12} sm={6} md={3} lg={3} key={chara.id}>
               <CharacterCard character={chara} />
             </Grid>
           )}
         </Grid>
-        <div className={classes.pageScrollArrowDiv}>
+        <div onClick={nextPageClick} className={clsx(classes.pageScrollArrowDiv,{
+          [classes.hidden]: !info?.next
+        })}>
           <KeyboardArrowRightIcon className={classes.pageScrollArrow} fontSize='large' />
         </div>
       </div>
