@@ -1,15 +1,20 @@
 import React from 'react';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
+import { Card, CardActionArea, CardHeader, CardMedia } from '@material-ui/core/';
 
 import { Character } from '../services/CharacterService';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      minWidth:'125px',
+    actionArea: {
+      borderRadius: 16,
+       transition: '0.2s',
+       '&:hover': {
+         transform: 'scale(1.04)',
+       },
+    },
+    card: {
+      minWidth: '125px',
       margin: '0px 5px 10px',
       backgroundColor: theme.palette.primary.dark,
     },
@@ -41,25 +46,27 @@ interface Props {
   character: Character,
 };
 
-export const CharaPage = ({ character }:Props) => {
+export const CharaPage = ({ character }: Props) => {
   const classes = useStyles();
 
   return (
-    <Card className={classes.root}>
-      <CardHeader classes={{
-        content: classes.cardHeaderContent,
-        title: classes.whiteFont,
-        subheader: classes.whiteFont,
+    <CardActionArea className={classes.actionArea}>
+      <Card className={classes.card}>
+        <CardHeader classes={{
+          content: classes.cardHeaderContent,
+          title: classes.whiteFont,
+          subheader: classes.whiteFont,
         }}
         title={character.name}
         subheader={`${character.species} - ${character.gender} - ${character.status}`}
-      />
-      <CardMedia
-        className={classes.media}
-        image={character.image}
-        title={character.name}
-      />
-    </Card>
+        />
+        <CardMedia
+          className={classes.media}
+          image={character.image}
+          title={character.name}
+        />
+      </Card>
+    </CardActionArea>
   );
 }
 

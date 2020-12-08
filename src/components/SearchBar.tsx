@@ -1,18 +1,10 @@
 import React, { useState } from 'react';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { Grid, Paper, TextField, MenuItem, Button } from "@material-ui/core";
-import {Clear, Search} from "@material-ui/icons";
+import { Clear, Search } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    searchBarPaper: {
-      margin: '0px 5px',
-      padding: theme.spacing(2),
-      [theme.breakpoints.up(600)]: {
-        padding: theme.spacing(1),
-      },
-      minWidth: '150px',
-    },
     layout: {
       [theme.breakpoints.down(600)]: {
         width: 300,
@@ -34,6 +26,14 @@ const useStyles = makeStyles((theme: Theme) =>
         marginLeft: 'auto',
         marginRight: 'auto',
       },
+    },
+    searchBarPaper: {
+      margin: '0px 5px',
+      padding: theme.spacing(2),
+      [theme.breakpoints.up(600)]: {
+        padding: theme.spacing(1),
+      },
+      minWidth: '150px',
     },
     buttonMargin: {
       marginRight: '8px',

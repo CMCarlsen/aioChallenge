@@ -14,7 +14,6 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       flexFlow: 'column',
       height: '100vh',
-      overflow: 'hidden',
     }
   }),
 );

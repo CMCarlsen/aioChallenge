@@ -18,10 +18,9 @@ const useStyles = makeStyles((theme: Theme) =>
       color: '#000',
       display: 'flex',
       flexDirection: 'column',
-      height: '100%',
       overflow: 'auto',
     },
-    explanationContainer: {
+    bannerContainer: {
       display: 'flex',
       flexDirection: 'column',
       backgroundColor: theme.palette.primary.dark,
@@ -32,27 +31,34 @@ const useStyles = makeStyles((theme: Theme) =>
         padding: '0px 60px 20px',
       },
     },
-    explanationHeader: {
+    bannerHeader: {
       display: 'flex',
       justifyContent: 'center',
+      fontFamily: '"East Sea Dokdo", monospace',
+      margin: '0px',
+      textShadow: `1px 1px 8px ${theme.palette.secondary.main}, 1px 1px 10px #ccc`,
+      [theme.breakpoints.down(660)]: {
+        fontSize: '40px',
+      },
+      [theme.breakpoints.up(661)]: {
+        fontSize: '60px',
+      },
     },
-    explanationText: {
+    bannerSubheader: {
       display: 'flex',
       justifyContent: 'center',
-      margin: 0,
+      marginTop: '0px',
+      marginBottom: '10px',
     },
     contentContainer: {
-      overflow: 'hidden',
       display: 'flex',
       flexDirection: 'row',
-      marginTop: '20px',
-      height: '100%',
     },
     characterCardContainer: {
-      overflow: 'auto',
       display: 'flex',
       flexDirection: 'row',
       flexWrap: 'wrap',
+      margin: '10px 10px 0px',
       [theme.breakpoints.down(600)]: {
         justifyContent: 'center',
       },
@@ -61,13 +67,16 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     pageScrollArrowDiv: {
-      margin: '15vh 5px',
+      margin: '0 5px',
+      height: '300px',
       minWidth: '50px',
       maxWidth: '50px',
+      backgroundColor: fade(theme.palette.primary.dark, 0.2),
       '&:hover': {
         backgroundColor: fade(theme.palette.primary.dark, 0.5),
       },
-      position: 'relative',
+      position: 'sticky',
+      top: '40vh',
     },
     pageScrollArrow: {
       width: '50px',
@@ -89,7 +98,7 @@ export const CharaPage = () => {
   const [searchParams, setSearchParams] = useState<Partial<SearchParameters>>({});
   const [info, setInfo] = useState<Info>();
   const [results, setResults] = useState<Array<Character>>();
-  const [page, setPage] = useState(1); // TODO: Add pagination using this
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     // Typescript hack for useEffect
@@ -124,8 +133,11 @@ export const CharaPage = () => {
 
   return (
     <div className={classes.container}>
-      <div className={classes.explanationContainer}>
-        <h1 className={classes.explanationHeader}>RnM API</h1>
+      <div className={classes.bannerContainer}>
+        <div>
+          <p className={classes.bannerHeader}>Rick and Morty API Browser</p>
+          <p className={classes.bannerSubheader}>“What is my purpose?” "Serving API data" "Oh my God"</p>
+        </div>
         <SearchBar doSearch={handleNewSearch} />
       </div>
       <div className={classes.contentContainer}>
@@ -134,7 +146,7 @@ export const CharaPage = () => {
         })}>
           <KeyboardArrowLeftIcon className={classes.pageScrollArrow} fontSize='large' />
         </div>
-        <Grid container spacing={1}
+        <Grid container spacing={2}
               className={classes.characterCardContainer}>
           {results?.map(chara =>
             <Grid item xs={12} sm={6} md={3} lg={3} key={chara.id}>
