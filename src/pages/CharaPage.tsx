@@ -58,12 +58,13 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       flexDirection: 'row',
       flexWrap: 'wrap',
-      margin: '10px 10px 0px',
       [theme.breakpoints.down(600)]: {
         justifyContent: 'center',
+        margin: '10px 0px 0px',
       },
       [theme.breakpoints.up(600)]: {
         justifyContent: 'left',
+        margin: '10px 10px 0px',
       },
     },
     pageScrollArrowDiv: {
@@ -76,7 +77,12 @@ const useStyles = makeStyles((theme: Theme) =>
         backgroundColor: fade(theme.palette.primary.dark, 0.5),
       },
       position: 'sticky',
-      top: '40vh',
+      '@media (max-height: 600px)':{
+        top: '20vh',
+      },
+      '@media (min-height: 600px)':{
+        top: '40vh',
+      },
     },
     pageScrollArrow: {
       width: '50px',
