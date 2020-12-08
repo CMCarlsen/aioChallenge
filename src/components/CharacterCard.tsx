@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     media: {
       height: 0,
-      paddingTop: '56.25%',
+      paddingTop: '80%',
     },
     container: {
       display: 'flex',

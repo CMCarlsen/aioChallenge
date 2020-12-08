@@ -44,8 +44,12 @@ const baseUrl = 'https://rickandmortyapi.com/api/character';
 const buildUrl = (page: number, parameters: Partial<SearchParameters>) => {
   let url = `${baseUrl}/?page=${page || 1}`;
 
-  for(const [k, v] of Object.entries(parameters)) {
-    url += `&${k}=${v}`;
+  if(parameters) {
+    for(const [k, v] of Object.entries(parameters)) {
+      if(v !== '') {
+        url += `&${k}=${v}`;
+      }
+    }
   }
 
   return url;

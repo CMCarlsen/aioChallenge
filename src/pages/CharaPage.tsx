@@ -12,26 +12,27 @@ import SearchBar from '../components/SearchBar';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
-      background: theme.palette.primary.light,
+      background: theme.palette.secondary.light,
       color: '#000',
       display: 'flex',
       flexDirection: 'column',
       height: '100%',
-      paddingTop: theme.spacing(0.1),
-      paddingBottom: theme.spacing(0.5),
       overflow: 'auto',
     },
     explanationContainer: {
       display: 'flex',
       flexDirection: 'column',
-      padding: '0px 100px',
-      marginBottom: '20px',
-      textAlign: 'center',
+      backgroundColor: theme.palette.primary.dark,
+      [theme.breakpoints.down(600)]: {
+        padding: '0px 20px 10px',
+      },
+      [theme.breakpoints.up(600)]: {
+        padding: '0px 60px 20px',
+      },
     },
     explanationHeader: {
       display: 'flex',
       justifyContent: 'center',
-      marginBottom: '5px',
     },
     explanationText: {
       display: 'flex',
@@ -42,21 +43,26 @@ const useStyles = makeStyles((theme: Theme) =>
       overflow: 'hidden',
       display: 'flex',
       flexDirection: 'row',
+      marginTop: '20px',
     },
     characterCardContainer: {
       overflow: 'auto',
       display: 'flex',
       flexDirection: 'row',
       flexWrap: 'wrap',
-      justifyContent: 'center',
-      padding: 0,
+      [theme.breakpoints.down(600)]: {
+        justifyContent: 'center',
+      },
+      [theme.breakpoints.up(600)]: {
+        justifyContent: 'left',
+      },
     },
     pageScrollArrowDiv: {
       margin: '15vh 5px',
       minWidth: '50px',
       maxWidth: '50px',
       '&:hover': {
-        backgroundColor: theme.palette.primary.dark
+        backgroundColor: theme.palette.primary.dark,
       },
       position: 'relative',
     },
@@ -93,21 +99,24 @@ export const CharaPage = () => {
     searchOnChanges();
   }, [searchParams, page]);
 
+  const paramsTest = (thing:any) => {
+    setSearchParams(thing);
+  }
+
   return (
     <div className={classes.container}>
       <div className={classes.explanationContainer}>
         <h1 className={classes.explanationHeader}>RnM API</h1>
-        <p className={classes.explanationText}>Wubba Lubba Dub Dub</p>
-        <SearchBar doSearch={setSearchParams} />
+        <SearchBar doSearch={paramsTest} />
       </div>
       <div className={classes.contentContainer}>
         <div className={classes.pageScrollArrowDiv}>
           <KeyboardArrowLeftIcon className={classes.pageScrollArrow} fontSize='large' />
         </div>
-        <Grid container direction='row' justify='center' alignItems='center' spacing={1}
+        <Grid container spacing={1}
               className={classes.characterCardContainer}>
           {results?.map(chara =>
-            <Grid item xs={7} sm={4} md={3} lg={2} key={chara.id}>
+            <Grid item xs={12} sm={6} md={3} lg={3} xl={2} key={chara.id}>
               <CharacterCard character={chara} />
             </Grid>
           )}

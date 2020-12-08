@@ -1,4 +1,4 @@
-import { createMuiTheme } from '@material-ui/core/styles';
+import { unstable_createMuiStrictModeTheme as createMuiTheme } from '@material-ui/core/styles'; // https://stackoverflow.com/a/64135466
 import grey from '@material-ui/core/colors/grey';
 import green from '@material-ui/core/colors/green';
 
@@ -8,7 +8,7 @@ import green from '@material-ui/core/colors/green';
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: grey[500],
+      main: grey[600],
     },
     secondary: {
       main: green[500],
