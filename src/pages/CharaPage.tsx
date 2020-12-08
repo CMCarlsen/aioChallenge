@@ -14,7 +14,7 @@ import SearchBar from '../components/SearchBar';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
-      background: theme.palette.secondary.light,
+      backgroundImage: `linear-gradient(180deg, ${theme.palette.secondary.light}, ${theme.palette.secondary.main})`,
       color: '#000',
       display: 'flex',
       flexDirection: 'column',
