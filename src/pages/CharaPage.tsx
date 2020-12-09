@@ -79,6 +79,7 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: fade(theme.palette.primary.dark, 0.3),
       '&:hover': {
         backgroundColor: fade(theme.palette.primary.dark, 0.5),
+        cursor: 'pointer',
       },
       [theme.breakpoints.down('sm')]: {
         margin: '0px',
