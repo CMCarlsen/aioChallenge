@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { Card, CardActionArea, CardMedia, CardContent, CardActions, Typography, Button } from '@material-ui/core/';
 
 import { Character } from '../services/CharacterService';
+import { Location, fetchLocationData } from "../services/LocationService";
+import { Episode, fetchEpisodeData } from "../services/EpisodeService";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -58,6 +60,27 @@ interface Props {
 };
 
 export const CharaPage = ({ character, color }: Props) => {
+  const [firstEp, setFirstEp] = useState<Episode>({ name: '' });
+  const [lastEp, setLastEp] = useState<Episode>({ name: '' });
+  const [origin, setOrigin] = useState<Location>({ name: '' });
+  const [location, setLocation] = useState<Location>({ name: '' });
+
+  useEffect(() => {
+    async function pullCharacterData() {
+      const cFirstEp:Episode = await fetchEpisodeData(character.episode[0]);
+      const cLastEp:Episode = await fetchEpisodeData(character.episode[character.episode.length - 1]);
+      const cOrigin:Location = await fetchLocationData(character.origin.url);
+      const cLocation:Location = await fetchLocationData(character.location.url);
+
+      setFirstEp(cFirstEp);
+      setLastEp(cLastEp);
+      setOrigin(cOrigin);
+      setLocation(cLocation);
+    }
+
+    pullCharacterData();
+  }, [character.episode, character.origin.url, character.location.url]);
+
   const classes = useStyles();
 
   const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
@@ -89,10 +112,10 @@ export const CharaPage = ({ character, color }: Props) => {
             </Typography>
             <div className={classes.infoContentBox}>
               <Typography variant="body2" color="textPrimary" component="p">
-              First seen: EPISODE
+              First seen: {firstEp?.name}
             </Typography>
               <Typography variant="body2" color="textPrimary" component="p">
-                Last seen: EPISODE
+                Last seen: {lastEp?.name}
               </Typography>
             </div>
             <Typography variant="h6" component="h2">
@@ -100,10 +123,10 @@ export const CharaPage = ({ character, color }: Props) => {
             </Typography>
             <div className={classes.infoContentBox}>
               <Typography variant="body2" color="textPrimary" component="p">
-                Origin: LOCATION
+                Origin: {origin?.name}
               </Typography>
               <Typography variant="body2" color="textPrimary" component="p">
-                Current: LOCATION
+                Current: {location?.name}
               </Typography>
             </div>
           </CardContent>
