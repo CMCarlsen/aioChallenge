@@ -25,25 +25,16 @@ const theme = createMuiTheme({
   overrides: {
     MuiCssBaseline: {
       '@global': {
-        '*': {
-          'scrollbar-width': 'thin',
-          'scrollbar-color': '#272828 transparent',
-        },
         '*::-webkit-scrollbar': {
-          width: '12px',
+          width: '7px',
         },
         '*::-webkit-scrollbar-button': {
           width: 0,
           display: 'none',
         },
         '*::-webkit-scrollbar-thumb': {
-          backgroundClip: 'content-box',
-          border: '3px solid transparent',
           borderRadius: '10px',
           boxShadow: 'inset 0 0 0 10px #272828',
-        },
-        '*::-webkit-scrollbar-corner': {
-          backgroundColor: 'transparent',
         },
       }
     }

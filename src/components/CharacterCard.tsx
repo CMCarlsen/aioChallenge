@@ -22,13 +22,6 @@ const useStyles = makeStyles((theme: Theme) =>
       height: 0,
       paddingTop: '80%',
     },
-    container: {
-      display: 'flex',
-      flexDirection: 'column',
-      height: '100%',
-      paddingTop: theme.spacing(0.1),
-      paddingBottom: theme.spacing(0.5),
-    },
     // https://css-tricks.com/flexbox-truncated-text/
     cardHeaderContent: {
       minWidth: 0,

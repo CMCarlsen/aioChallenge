@@ -21,6 +21,8 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: 'column',
       overflow: 'auto',
       height: '100vh',
+      width: '100%',
+      overflowX: 'hidden',
     },
     bannerContainer: {
       display: 'flex',
@@ -39,7 +41,10 @@ const useStyles = makeStyles((theme: Theme) =>
       fontFamily: '"East Sea Dokdo", monospace',
       margin: '0px',
       textShadow: `1px 1px 8px ${theme.palette.secondary.main}, 1px 1px 10px #ccc`,
-      [theme.breakpoints.down(660)]: {
+      [theme.breakpoints.down(450)]: {
+        fontSize: '30px',
+      },
+      [theme.breakpoints.up(450)]: {
         fontSize: '40px',
       },
       [theme.breakpoints.up(661)]: {
@@ -55,12 +60,12 @@ const useStyles = makeStyles((theme: Theme) =>
     contentContainer: {
       display: 'flex',
       flexDirection: 'row',
-      height: '100%',
     },
     characterCardContainer: {
       display: 'flex',
       flexDirection: 'row',
       flexWrap: 'wrap',
+      maxWidth: '100%',
       [theme.breakpoints.down(600)]: {
         justifyContent: 'center',
         margin: '10px 0px 0px',
@@ -71,20 +76,36 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     pageScrollArrowDiv: {
-      margin: '0 5px',
       height: '300px',
-      minWidth: '50px',
-      maxWidth: '50px',
       backgroundColor: fade(theme.palette.primary.dark, 0.2),
       '&:hover': {
         backgroundColor: fade(theme.palette.primary.dark, 0.5),
       },
+      [theme.breakpoints.down('sm')]: {
+        margin: '0px',
+        minWidth: '20px',
+        maxWidth: '20px',
+      },
+      [theme.breakpoints.up('sm')]: {
+        margin: '0 5px',
+        minWidth: '50px',
+        maxWidth: '50px',
+      },
       position: 'sticky',
-      '@media (max-height: 600px)':{
-        top: '20vh',
+      '@media (max-height: 375px)':{
+        top: '0px',
+      },
+      '@media (min-height: 375px)':{
+        top: '30px',
+      },
+      '@media (min-height: 450px)':{
+        top: '18vh',
       },
       '@media (min-height: 600px)':{
-        top: '40vh',
+        top: '23vh',
+      },
+      '@media (min-height: 900px)':{
+        top: '30vh',
       },
     },
     pageScrollArrow: {
