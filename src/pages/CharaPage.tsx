@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme: Theme) =>
     bannerContainer: {
       display: 'flex',
       flexDirection: 'column',
-      backgroundColor: theme.palette.primary.dark,
       [theme.breakpoints.down(600)]: {
         padding: '0px 20px 10px',
       },
@@ -77,7 +76,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     pageScrollArrowDiv: {
       height: '300px',
-      backgroundColor: fade(theme.palette.primary.dark, 0.2),
+      backgroundColor: fade(theme.palette.primary.dark, 0.3),
       '&:hover': {
         backgroundColor: fade(theme.palette.primary.dark, 0.5),
       },
@@ -127,11 +126,11 @@ const colorTool = new ColorTool();
 export const CharaPage = () => {
   const classes = useStyles(); // Use our CSS-in-JS styling from above.
 
-  const [searchParams, setSearchParams] = useState<Partial<SearchParameters>>({});
+  const [searchParams, setSearchParams] = useState({});
   const [info, setInfo] = useState<Info>();
   const [results, setResults] = useState<Array<Character>>();
-  const [page, setPage] = useState<number>(1);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [page, setPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     // Typescript hack for useEffect
@@ -186,7 +185,7 @@ export const CharaPage = () => {
         <Grid container spacing={2}
               className={classes.characterCardContainer}>
           {isLoading ? <></> : results?.map(chara =>
-            <Grid item xs={12} sm={6} md={3} lg={3} key={chara.id}>
+            <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={chara.id}>
               <CharacterCard character={chara} color={colorTool.getDarkColor()}/>
             </Grid>
           )}

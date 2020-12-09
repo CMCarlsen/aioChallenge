@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { Card, CardActionArea, CardMedia, CardContent, CardActions, Typography, Button } from '@material-ui/core/';
+import { Info } from '@material-ui/icons';
 
 import { Character } from '../services/CharacterService';
 import { Location, fetchLocationData } from "../services/LocationService";
@@ -10,9 +11,14 @@ import { Episode, fetchEpisodeData } from "../services/EpisodeService";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     actionArea: {
-      borderRadius: 16,
       transition: '0.2s',
     },
+    actionAreaHover:{
+      "&:hover $focusHighlight": {
+        opacity: 0.2,
+      }
+    },
+    focusHighlight: {},
     card: {
       minWidth: '125px',
       margin: '0px 5px 10px',
@@ -21,15 +27,6 @@ const useStyles = makeStyles((theme: Theme) =>
     media: {
       height: 0,
       paddingTop: '80%',
-    },
-    // https://css-tricks.com/flexbox-truncated-text/
-    cardHeaderContent: {
-      minWidth: 0,
-    },
-    whiteFont: {
-      whiteSpace: 'nowrap',
-      overflow: 'hidden',
-      textOverflow: 'ellipsis',
     },
     overlay: {
       position: 'absolute',
@@ -50,6 +47,18 @@ const useStyles = makeStyles((theme: Theme) =>
     infoContentBox: {
       paddingLeft: '10px',
       marginBottom: '5px',
+    },
+    whiteFont: {
+      color: '#fdfdfd',
+    },
+    // https://css-tricks.com/flexbox-truncated-text/
+    cardHeaderContent: {
+      minWidth: 0,
+    },
+    fontOverflow: {
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
     },
   }),
 );
@@ -88,16 +97,22 @@ export const CharaPage = ({ character, color }: Props) => {
   return (
     <Card className={classes.card} style={{ backgroundColor: color }}>
       <CardContent>
-        <Typography variant="h6" component="h2">
+        <Typography variant="h6" component="h2" className={classes.whiteFont}>
           {character.name}
         </Typography>
-        <Typography variant="body2" color="textPrimary" component="p">
-          {character.species} - {character.gender} - {character.status}
+        <Typography variant="body2" color="textPrimary" component="p" className={classes.whiteFont}>
+          {character.species} - {character.gender}
+        </Typography>
+        <Typography variant="body2" color="textPrimary" component="p" className={classes.whiteFont}>
+          {character.status}
         </Typography>
       </CardContent>
-      <CardActionArea className={classes.actionArea} onClick={() => {
-                setPopoverOpen(!popoverOpen)
-              }}>
+      <CardActionArea className={classes.actionArea}
+        classes={{ root: classes.actionAreaHover, focusHighlight: classes.focusHighlight }}
+        onClick={() => {
+          setPopoverOpen(!popoverOpen)
+        }}
+      >
         <CardMedia
           image={character.image}
           title={character.name}
@@ -107,25 +122,25 @@ export const CharaPage = ({ character, color }: Props) => {
           [classes.unhideOverlay]: popoverOpen,
         })}>
           <CardContent className={classes.infoOverlayBox}>
-            <Typography variant="h6" component="h2">
+            <Typography variant="h6" component="h2" className={classes.whiteFont}>
               Episode Info:
             </Typography>
             <div className={classes.infoContentBox}>
-              <Typography variant="body2" color="textPrimary" component="p">
+              <Typography variant="body2" color="textPrimary" component="p" className={classes.whiteFont}>
               First seen: {firstEp?.name}
             </Typography>
-              <Typography variant="body2" color="textPrimary" component="p">
+              <Typography variant="body2" color="textPrimary" component="p" className={classes.whiteFont}>
                 Last seen: {lastEp?.name}
               </Typography>
             </div>
-            <Typography variant="h6" component="h2">
+            <Typography variant="h6" component="h2" className={classes.whiteFont}>
               Location Info:
             </Typography>
             <div className={classes.infoContentBox}>
-              <Typography variant="body2" color="textPrimary" component="p">
+              <Typography variant="body2" color="textPrimary" component="p" className={classes.whiteFont}>
                 Origin: {origin?.name}
               </Typography>
-              <Typography variant="body2" color="textPrimary" component="p">
+              <Typography variant="body2" color="textPrimary" component="p" className={classes.whiteFont}>
                 Current: {location?.name}
               </Typography>
             </div>
@@ -133,7 +148,12 @@ export const CharaPage = ({ character, color }: Props) => {
         </div>
       </CardActionArea>
       <CardActions>
-        <Button size="small" onClick={() => {
+        <Button
+          variant='contained'
+          size='small'
+          color='primary'
+          startIcon={<Info />}
+          onClick={() => {
           setPopoverOpen(!popoverOpen)
         }}>
           More deets
