@@ -6,6 +6,7 @@ import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import Grid from '@material-ui/core/Grid';
 
+import ColorTool from "../services/ColorTool";
 import CharacterCard from '../components/CharacterCard';
 import { Info, Character, SearchParameters } from '../services/CharacterService';
 import { buildUrl, fetchCharacterList } from '../services/CharacterService';
@@ -14,11 +15,12 @@ import SearchBar from '../components/SearchBar';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
-      backgroundImage: `linear-gradient(180deg, ${theme.palette.secondary.light}, ${theme.palette.secondary.main})`,
+      backgroundImage: `linear-gradient(180deg, ${theme.palette.secondary.light}, ${theme.palette.secondary.dark})`,
       color: '#000',
       display: 'flex',
       flexDirection: 'column',
       overflow: 'auto',
+      height: '100vh',
     },
     bannerContainer: {
       display: 'flex',
@@ -53,6 +55,7 @@ const useStyles = makeStyles((theme: Theme) =>
     contentContainer: {
       display: 'flex',
       flexDirection: 'row',
+      height: '100%',
     },
     characterCardContainer: {
       display: 'flex',
@@ -98,13 +101,16 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
+const colorTool = new ColorTool();
+
 export const CharaPage = () => {
   const classes = useStyles(); // Use our CSS-in-JS styling from above.
 
   const [searchParams, setSearchParams] = useState<Partial<SearchParameters>>({});
   const [info, setInfo] = useState<Info>();
   const [results, setResults] = useState<Array<Character>>();
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState<number>(1);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     // Typescript hack for useEffect
@@ -115,6 +121,7 @@ export const CharaPage = () => {
       const { info, characterList } = newCharList;
       setInfo(info);
       setResults(characterList);
+      setIsLoading(false);
     }
 
     searchOnChanges();
@@ -122,17 +129,20 @@ export const CharaPage = () => {
 
   const prevPageClick = () => {
     if(info?.prev){
+      setIsLoading(true);
       setPage(page-1);
     }
   }
 
   const nextPageClick = () => {
     if(info?.next){
+      setIsLoading(true);
       setPage(page+1);
     }
   }
 
   const handleNewSearch = (searchParams: Partial<SearchParameters>) => {
+    setIsLoading(true);
     setPage(1);
     setSearchParams(searchParams)
   }
@@ -154,9 +164,9 @@ export const CharaPage = () => {
         </div>
         <Grid container spacing={2}
               className={classes.characterCardContainer}>
-          {results?.map(chara =>
+          {isLoading ? <></> : results?.map(chara =>
             <Grid item xs={12} sm={6} md={3} lg={3} key={chara.id}>
-              <CharacterCard character={chara} />
+              <CharacterCard character={chara} color={colorTool.getDarkColor()}/>
             </Grid>
           )}
         </Grid>

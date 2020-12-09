@@ -44,14 +44,17 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface Props {
   character: Character,
+  color: string,
 };
 
-export const CharaPage = ({ character }: Props) => {
+export const CharaPage = ({ character, color }: Props) => {
   const classes = useStyles();
+
+  let thing = '1';
 
   return (
     <CardActionArea className={classes.actionArea}>
-      <Card className={classes.card}>
+      <Card className={classes.card} style={{ backgroundColor: color }}>
         <CardHeader classes={{
           content: classes.cardHeaderContent,
           title: classes.whiteFont,
