@@ -3,6 +3,10 @@ import clsx from 'clsx';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { Card, CardActionArea, CardMedia, CardContent, CardActions, Typography, Button } from '@material-ui/core/';
 import { Info } from '@material-ui/icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faDizzy } from "@fortawesome/free-regular-svg-icons";
+import { faLaughWink } from "@fortawesome/free-regular-svg-icons";
+import { faQuestionCircle } from "@fortawesome/free-regular-svg-icons";
 
 import { Character } from '../services/CharacterService';
 import { Location, fetchLocationData } from "../services/LocationService";
@@ -60,6 +64,14 @@ const useStyles = makeStyles((theme: Theme) =>
       overflow: 'hidden',
       textOverflow: 'ellipsis',
     },
+    flexAndCenter: {
+      display: 'flex',
+      alignItems: 'center',
+    },
+    statusIcon: {
+      fontSize: '20px',
+      marginLeft: '5px',
+    },
   }),
 );
 
@@ -94,17 +106,31 @@ export const CharaPage = ({ character, color }: Props) => {
 
   const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
 
+  let statusIcon;
+  switch (character.status.toLocaleLowerCase()) {
+    case 'alive':
+      statusIcon = faLaughWink;
+      break;
+    case 'dead':
+      statusIcon = faDizzy;
+      break;
+    default:
+      statusIcon = faQuestionCircle;
+  }
+
   return (
     <Card className={classes.card} style={{ backgroundColor: color }}>
       <CardContent>
-        <Typography variant="h6" component="h2" className={classes.whiteFont}>
+        <Typography variant="h6" component="h2" className={clsx(classes.whiteFont, classes.fontOverflow)}>
           {character.name}
         </Typography>
         <Typography variant="body2" color="textPrimary" component="p" className={classes.whiteFont}>
-          {character.species} - {character.gender}
+          {character.species.charAt(0).toUpperCase() + character.species.slice(1)
+          } - {character.gender.charAt(0).toUpperCase() + character.gender.slice(1)}
         </Typography>
-        <Typography variant="body2" color="textPrimary" component="p" className={classes.whiteFont}>
-          {character.status}
+        <Typography variant="body2" color="textPrimary" component="p" className={clsx(classes.whiteFont, classes.flexAndCenter)}>
+          {character.status.charAt(0).toUpperCase() + character.status.slice(1)}
+          <FontAwesomeIcon icon={statusIcon} className={classes.statusIcon}/>
         </Typography>
       </CardContent>
       <CardActionArea className={classes.actionArea}
