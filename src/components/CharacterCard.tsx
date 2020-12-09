@@ -63,6 +63,9 @@ const useStyles = makeStyles((theme: Theme) =>
       whiteSpace: 'nowrap',
       overflow: 'hidden',
       textOverflow: 'ellipsis',
+      [theme.breakpoints.down(400)]: {
+        maxWidth: '200px',
+      }
     },
     flexAndCenter: {
       display: 'flex',

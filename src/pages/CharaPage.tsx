@@ -19,10 +19,9 @@ const useStyles = makeStyles((theme: Theme) =>
       color: '#000',
       display: 'flex',
       flexDirection: 'column',
-      overflow: 'auto',
       height: '100vh',
       width: '100%',
-      overflowX: 'hidden',
+      overflow: 'hidden',
     },
     bannerContainer: {
       display: 'flex',
@@ -59,53 +58,55 @@ const useStyles = makeStyles((theme: Theme) =>
     contentContainer: {
       display: 'flex',
       flexDirection: 'row',
+      height: '100%',
+      overflowY: 'scroll',
+      overflowX: 'auto',
     },
     characterCardContainer: {
       display: 'flex',
       flexDirection: 'row',
+      margin: '0px 0px',
       flexWrap: 'wrap',
-      maxWidth: '100%',
+      minHeight: '100%',
       [theme.breakpoints.down(600)]: {
         justifyContent: 'center',
-        margin: '10px 0px 0px',
       },
       [theme.breakpoints.up(600)]: {
         justifyContent: 'left',
-        margin: '10px 10px 0px',
       },
+    },
+    characterCardContainerRoot: {
+      height: '100%',
+      width: '100%',
     },
     pageScrollArrowDiv: {
       height: '300px',
+      margin: '0px 5px',
       backgroundColor: fade(theme.palette.primary.dark, 0.3),
       '&:hover': {
         backgroundColor: fade(theme.palette.primary.dark, 0.5),
         cursor: 'pointer',
       },
       [theme.breakpoints.down('sm')]: {
-        margin: '0px',
         minWidth: '20px',
         maxWidth: '20px',
       },
       [theme.breakpoints.up('sm')]: {
-        margin: '0 5px',
         minWidth: '50px',
         maxWidth: '50px',
       },
       position: 'sticky',
-      '@media (max-height: 375px)':{
+      '@media (max-height: 600px)':{
         top: '0px',
       },
-      '@media (min-height: 375px)':{
-        top: '30px',
+      '@media (min-height: 600px)':{
+        top: '7vh',
       },
-      '@media (min-height: 450px)':{
+      '@media (min-height: 750px)':{
         top: '18vh',
       },
-      '@media (min-height: 600px)':{
-        top: '23vh',
-      },
       '@media (min-height: 900px)':{
-        top: '30vh',
+        top: '25vh',
       },
     },
     pageScrollArrow: {
@@ -118,7 +119,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     hidden: {
       visibility: 'hidden',
-    }
+    },
   }),
 );
 
@@ -183,14 +184,18 @@ export const CharaPage = () => {
         })}>
           <KeyboardArrowLeftIcon className={classes.pageScrollArrow} fontSize='large' />
         </div>
-        <Grid container spacing={2}
-              className={classes.characterCardContainer}>
-          {isLoading ? <></> : results?.map(chara =>
-            <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={chara.id}>
-              <CharacterCard character={chara} color={colorTool.getDarkColor()}/>
-            </Grid>
-          )}
-        </Grid>
+        <div className={classes.characterCardContainerRoot}>
+          <Grid container spacing={0}
+                className={classes.characterCardContainer}
+                // classes={{ root: classes.characterCardContainerRoot }}
+          >
+            {isLoading ? <></> : results?.map(chara =>
+              <Grid item xs={10} sm={6} md={4} lg={3} xl={2} key={chara.id}>
+                <CharacterCard character={chara} color={colorTool.getDarkColor()} />
+              </Grid>
+            )}
+          </Grid>
+        </div>
         <div onClick={nextPageClick} className={clsx(classes.pageScrollArrowDiv,{
           [classes.hidden]: !info?.next
         })}>
