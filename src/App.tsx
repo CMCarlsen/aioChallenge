@@ -18,13 +18,6 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-// TODO: Remove these in place of page imports later
-const HomePage = () => (
-  <div>
-    <h1>HOME</h1>
-  </div>
-);
-
 // Use <Switch> to route based on URL bar.
 // Only show homepage if path is exact root-page
 // Wrap with ThemeProvider to allow child components access
@@ -38,8 +31,7 @@ function App() {
       <div className={classes.root}>
         <NavBar />
           <Switch>
-            <Route exact path='/' component={HomePage}/>
-            <Route path='/characters' component={CharaPage}/>
+            <Route path='/' component={CharaPage}/>
             <Route />
           </Switch>
       </div>
