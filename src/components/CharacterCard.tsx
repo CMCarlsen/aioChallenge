@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
+import clsx from 'clsx';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import { Card, CardActionArea, CardHeader, CardMedia } from '@material-ui/core/';
+import { Card, CardActionArea, CardMedia, CardContent, CardActions, Typography, Button } from '@material-ui/core/';
 
 import { Character } from '../services/CharacterService';
 
@@ -8,10 +9,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     actionArea: {
       borderRadius: 16,
-       transition: '0.2s',
-       '&:hover': {
-         transform: 'scale(1.04)',
-       },
+      transition: '0.2s',
     },
     card: {
       minWidth: '125px',
@@ -30,7 +28,26 @@ const useStyles = makeStyles((theme: Theme) =>
       whiteSpace: 'nowrap',
       overflow: 'hidden',
       textOverflow: 'ellipsis',
-      color: '#fff',
+    },
+    overlay: {
+      position: 'absolute',
+      bottom: '0',
+      left: '0',
+      right: '0',
+      overflow: 'hidden',
+      width: '100%',
+      height: '0',
+      transition: '.5s ease',
+    },
+    unhideOverlay: {
+      height: '100%',
+    },
+    infoOverlayBox: {
+      paddingTop: '0px',
+    },
+    infoContentBox: {
+      paddingLeft: '10px',
+      marginBottom: '5px',
     },
   }),
 );
@@ -43,26 +60,63 @@ interface Props {
 export const CharaPage = ({ character, color }: Props) => {
   const classes = useStyles();
 
-  let thing = '1';
+  const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
 
   return (
-    <CardActionArea className={classes.actionArea}>
-      <Card className={classes.card} style={{ backgroundColor: color }}>
-        <CardHeader classes={{
-          content: classes.cardHeaderContent,
-          title: classes.whiteFont,
-          subheader: classes.whiteFont,
-        }}
-        title={character.name}
-        subheader={`${character.species} - ${character.gender} - ${character.status}`}
-        />
+    <Card className={classes.card} style={{ backgroundColor: color }}>
+      <CardContent>
+        <Typography variant="h6" component="h2">
+          {character.name}
+        </Typography>
+        <Typography variant="body2" color="textPrimary" component="p">
+          {character.species} - {character.gender} - {character.status}
+        </Typography>
+      </CardContent>
+      <CardActionArea className={classes.actionArea} onClick={() => {
+                setPopoverOpen(!popoverOpen)
+              }}>
         <CardMedia
-          className={classes.media}
           image={character.image}
           title={character.name}
+          className={classes.media}
         />
-      </Card>
-    </CardActionArea>
+        <div style={{ backgroundColor: color }} className={clsx(classes.overlay, {
+          [classes.unhideOverlay]: popoverOpen,
+        })}>
+          <CardContent className={classes.infoOverlayBox}>
+            <Typography variant="h6" component="h2">
+              Episode Info:
+            </Typography>
+            <div className={classes.infoContentBox}>
+              <Typography variant="body2" color="textPrimary" component="p">
+              First seen: EPISODE
+            </Typography>
+              <Typography variant="body2" color="textPrimary" component="p">
+                Last seen: EPISODE
+              </Typography>
+            </div>
+            <Typography variant="h6" component="h2">
+              Location Info:
+            </Typography>
+            <div className={classes.infoContentBox}>
+              <Typography variant="body2" color="textPrimary" component="p">
+                Origin: LOCATION
+              </Typography>
+              <Typography variant="body2" color="textPrimary" component="p">
+                Current: LOCATION
+              </Typography>
+            </div>
+          </CardContent>
+        </div>
+      </CardActionArea>
+      <CardActions>
+        <Button size="small" onClick={() => {
+          setPopoverOpen(!popoverOpen)
+        }}>
+          More deets
+        </Button>
+      </CardActions>
+    </Card>
   );
 }
 
